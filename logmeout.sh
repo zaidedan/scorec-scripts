@@ -15,7 +15,7 @@ for i in $(w | sed '1,2d' | awk '{OFS = ","} ; { print $1, $2, $5 }' | sed 's/:.
 	   idletime=100000
 	fi
 	# if idle time is greater than thirty minutes, get corresponding PIDs of these ttys
-	if [ "$idletime" -gt 1 ] && [ "$user" == "$USER" ]; then
+	if [ "$idletime" -gt 1 ] && [ "$user" == "zaided" ]; then
 		TTYTOKILL=$(echo "$i" | awk 'BEGIN {FS = ","} ; {print $2}' | sed 's/^.*\///')
 		NEWPIDSTOKILL=$(ps -t $TTYTOKILL | grep 'pts' | awk '{print $1}')
 		PIDSTOKILL=$(echo $PIDSTOKILL $NEWPIDSTOKILL)
