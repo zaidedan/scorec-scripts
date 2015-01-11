@@ -18,7 +18,7 @@ for COMP in ${COMPUTERS[@]}; do
         echo -n "$COMP "
 	if [ "$HOSTNAME" != "$COMP" ]; then
 	     # check if we have a computer thats mostly free (80%)
-               	CPU=$(ssh $COMP 'bash -s' < /users/zaided/scripts/cpu_check.sh $MIN_MEM )
+               	CPU=$(ssh $COMP 'bash -s' < /users/zaided/scorec-scripts/cpu_check.sh $MIN_MEM )
         	if [[ $(echo "$CPU>80.0" | bc) -eq 1 ]]; then
                      BEST_COMP=$COMP
 			break
