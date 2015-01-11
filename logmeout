@@ -1,0 +1,20 @@
+# SCOREC-SCRIPT
+# DANIEL W. ZAIDE, 01/11/2015
+# This script is used to log me out of idle processes
+# Usage: logmeout
+
+#!/bin/bash
+
+# Randomize the list of computers
+COMPUTERS=( $(echo "romulus remus catan othello monopoly clue stratego risk mastermind balderdash diplomacy " \
+ | sed -r 's/(.[^;]*;)/ \1 /g' | tr " " "\n" | shuf | tr -d " " ) )
+
+echo -n "Killing idle processes on "
+for COMP in ${COMPUTERS[@]}; do
+    	    echo -n "$COMP"
+	    if [ "$COMP" == "$HOSTNAME" ]; then
+	        source /users/zaided/scorec-scripts/logmeout.sh
+	    else
+		ssh $COMP 'bash -s' < /users/zaided/scorec-scripts/logmeout.sh 
+	    fi
+done 
