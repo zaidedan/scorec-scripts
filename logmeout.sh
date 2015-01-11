@@ -35,4 +35,6 @@ do
 echo $ps
 kill -9 $(echo $ps)
 done
+else
+echo "none"
 fi

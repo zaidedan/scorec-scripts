@@ -9,12 +9,13 @@
 COMPUTERS=( $(echo "romulus remus catan othello monopoly clue stratego risk mastermind balderdash diplomacy " \
  | sed -r 's/(.[^;]*;)/ \1 /g' | tr " " "\n" | shuf | tr -d " " ) )
 
-echo -n "Killing idle processes on "
+echo "Killing idle processes on "
 for COMP in ${COMPUTERS[@]}; do
-    	    echo -n "$COMP"
+    	    echo -n "$COMP "
 	    if [ "$COMP" == "$HOSTNAME" ]; then
-	        source /users/zaided/scorec-scripts/logmeout.sh
+	        echo $(source /users/zaided/scorec-scripts/logmeout.sh)
 	    else
-		ssh $COMP 'bash -s' < /users/zaided/scorec-scripts/logmeout.sh 
+		echo $(ssh $COMP 'bash -s' < /users/zaided/scorec-scripts/logmeout.sh)
 	    fi
 done 
+echo
