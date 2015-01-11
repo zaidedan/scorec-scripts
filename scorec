@@ -1,0 +1,38 @@
+# Actual comparison done in KB, default value
+MIN_MEM=4000000
+# If input given, convert from GB to integer KB
+if [[ "$#" -ne 0 ]]; then
+        # Multiply and round
+        MIN_MEM=$(echo "$1*1000000" | bc)
+        MIN_MEM=${MIN_MEM/\.*}
+fi
+# List of computers, randomized
+COMPUTERS=( $(echo "romulus remus catan othello monopoly clue stratego risk mastermind balderdash diplomacy " \
+ | sed -r 's/(.[^;]*;)/ \1 /g' | tr " " "\n" | shuf | tr -d " " ) )
+#COMPUTERS=(romulus remus catan othello monopoly clue stratego risk mastermind balderdash diplomacy)
+
+MAX_CPU=-1.0
+BEST_COMP=""
+echo -n "Finding computer with at least" $(echo "$MIN_MEM/1000000" | bc) "GB Free Memory. Checking "
+for COMP in ${COMPUTERS[@]}; do
+        echo -n "$COMP "
+	if [ "$HOSTNAME" != "$COMP" ]; then
+	     # check if we have a computer thats mostly free (80%)
+               	CPU=$(ssh $COMP 'bash -s' < /users/zaided/scripts/cpu_check.sh $MIN_MEM )
+        	if [[ $(echo "$CPU>80.0" | bc) -eq 1 ]]; then
+                     BEST_COMP=$COMP
+			break
+        	elif [[ $(echo " $CPU > $MAX_CPU" | bc) -eq 1 ]]; then
+                       MAX_CPU=$CPU
+			BEST_COMP=$COMP
+        	fi
+	fi
+done 
+# if we haven't found a computer, just run again
+# only triggered if MIN_MEM > 0
+if [ -z "$BEST_COMP" ]; then
+        echo -e "\n no computer with that much memory available, trying without memory requirement\n"
+        scorec 0.0
+fi
+echo
+ssh $BEST_COMP
