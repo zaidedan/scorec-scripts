@@ -3,7 +3,7 @@
 # This script is used to pick a machine on scorec to use 
 # Based on free CPU with minimum memory
 # Memory can be user specified in GB
-# If no value specified, 4 GB is used
+# If no value specified, 2 GB is used
 # Computers traversed in random order, to avoid bias 
 # If free CPU is greater than 80%, that machine is chosen
 # Usage: scorec 
@@ -12,7 +12,7 @@
 #!/bin/bash
 
 # Actual comparison done in KB, default value
-MIN_MEM=4000000
+MIN_MEM=2000000
 
 # If input given, convert from GB to integer KB
 if [[ "$#" -ne 0 ]]; then
@@ -25,7 +25,6 @@ COMPUTERS=( $(echo "romulus remus catan othello monopoly clue stratego risk mast
  | sed -r 's/(.[^;]*;)/ \1 /g' | tr " " "\n" | shuf | tr -d " " ) )
 
 #COMPUTERS=(romulus remus catan othello monopoly clue stratego risk mastermind balderdash diplomacy)
-
 
 MAX_CPU=-1.0
 BEST_COMP=""
