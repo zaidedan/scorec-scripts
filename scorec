@@ -21,11 +21,8 @@ if [[ "$#" -ne 0 ]]; then
         MIN_MEM=${MIN_MEM/\.*}
 fi
 # Randomize the list of computers
-COMPUTERS=( $(echo "romulus remus catan othello monopoly clue stratego risk mastermind balderdash diplomacy " \
+COMPUTERS=( $(echo "$SCOREC_COMPUTERS" \
  | sed -r 's/(.[^;]*;)/ \1 /g' | tr " " "\n" | shuf | tr -d " " ) )
-
-#COMPUTERS=(romulus remus catan othello monopoly clue stratego risk mastermind balderdash diplomacy)
-
 MAX_CPU=-1.0
 BEST_COMP=""
 echo -n "Finding computer with at least" $(echo "$MIN_MEM/1000000" | bc) "GB Free Memory. Checking "

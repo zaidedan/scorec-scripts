@@ -6,7 +6,7 @@
 #!/bin/bash
 
 # Randomize the list of computers
-COMPUTERS=( $(echo "romulus remus catan othello monopoly clue stratego risk mastermind balderdash diplomacy " \
+COMPUTERS=( $(echo "$SCOREC_COMPUTERS" \
  | sed -r 's/(.[^;]*;)/ \1 /g' | tr " " "\n" | shuf | tr -d " " ) )
 
 echo "Killing idle processes on "
