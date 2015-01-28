@@ -32,7 +32,6 @@ for COMP in ${COMPUTERS[@]}; do
             # Run the cpu_check.sh script, which returns negative 
             # if the minimum memory is not free
             CPU=$(ssh $COMP 'bash -s' < /users/zaided/scorec-scripts/cpu_check.sh $MIN_MEM )
-
             # check if we have a computer thats mostly free (80%)
         	if [[ $(echo "$CPU>80.0" | bc) -eq 1 ]]; then
                 BEST_COMP=$COMP
@@ -50,4 +49,4 @@ if [ -z "$BEST_COMP" ]; then
     scorec 0.0
 fi
 echo
-ssh $BEST_COMP
+ssh -t $BEST_COMP 'top -bn1 | head -5; bash -l'
