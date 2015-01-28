@@ -10,5 +10,6 @@ MEM=$(top -bn1 | grep "Mem" | \
 if [[ $MEM -lt $1 ]]; then
 	CPU=-100.0
 fi
+
 # This is needed to pass into the find_computer function
 echo $CPU

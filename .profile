@@ -6,7 +6,6 @@ export PATH=/users/zaided/bin:$PATH
 
 if [ "$HOSTNAME" != jumpgate ]; then
 
-	top -bn1 | head -5
 	module load cmake/latest \
 	mpich3/3.1.2-thread-multiple \
 	parmetis/mpich3.1.2/4.0.3 \
@@ -34,6 +33,11 @@ alias emacs='emacs 2>/dev/null'
 alias rm='rm -I'
 alias cd..='cd ..'
 
+function makelog {
+    make "$@" 2>&1 | tee "make-$(date +"%H-%M-%S-%F").log"
+}
+
+alias make='makelog'
 #export SCOREC_COMPUTERS="(romulus remus catan othello monopoly clue stratego risk mastermind balderdash diplomacy)"
 export SCOREC_COMPUTERS="romulus remus catan othello monopoly clue mastermind balderdash"
 
